@@ -10,11 +10,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 
 # COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
-VOLUME ["/var/lib/mysql"]
-
 COPY entrypoint.sh entrypoint.sql /
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 3306/tcp
 
+VOLUME ["/var/lib/mysql"]
 ENTRYPOINT ["/entrypoint.sh"]
