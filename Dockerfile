@@ -1,4 +1,4 @@
-FROM alpine:3.11.3
+FROM alpine:3.12.0
 MAINTAINER Sebastian Braun <sebastian.braun@fh-aachen.de>
 # base alpine template
 
