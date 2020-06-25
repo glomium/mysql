@@ -39,4 +39,4 @@ else
 fi
 
 echo '[i] start running mysqld'
-exec /usr/bin/mysqld_safe --user=mysql --console --datadir='/var/lib/mysql'
+exec /usr/bin/mysqld_safe --user=mysql --console --datadir='/var/lib/mysql' --skip-syslog --log-error=/dev/stderr

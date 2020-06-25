@@ -11,7 +11,9 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 # COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
 
 COPY entrypoint.sh entrypoint.sql /
-RUN chmod +x /entrypoint.sh
+RUN \ 
+    sed -i 's/bind-address.*/bind-address = 0\.0\.0\.0/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    chmod +x /entrypoint.sh
 
 EXPOSE 3306/tcp
 
