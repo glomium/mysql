@@ -12,7 +12,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 
 COPY entrypoint.sh entrypoint.sql /
 RUN \ 
-    sed -i 's/bind-address.*/bind-address = 0\.0\.0\.0/' /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    sed -i 's/bind-address.*//' /etc/mysql/mariadb.conf.d/50-server.cnf && \
     chmod +x /entrypoint.sh
 
 EXPOSE 3306/tcp
