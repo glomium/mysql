@@ -1,19 +1,27 @@
-FROM alpine:3.12.0
+ARG UBUNTU=rolling
+FROM ubuntu:$UBUNTU
 MAINTAINER Sebastian Braun <sebastian.braun@fh-aachen.de>
-# base alpine template
 
-# Download requirements
-RUN apk add --no-cache mysql \
- && addgroup mysql mysql \
- && mkdir /startup
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q \
+    gettext-base \
+    mariadb-server \
+    vim \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
-COPY mariadb-server.cnf /etc/my.cnf.d/mariadb-server.cnf
+COPY entrypoint.sh /
 
-VOLUME ["/var/lib/mysql"]
-
-COPY run.sh /startup/run.sh
-RUN chmod +x /startup/run.sh
+RUN \ 
+    sed -i 's/bind-address.*//' /etc/mysql/mariadb.conf.d/50-server.cnf && \
+    sed -i -e "s/\(\[mysqld\]\)/\1\nskip-host-cache/g" /etc/mysql/mariadb.conf.d/50-server.cnf && \ 
+    sed -i -e "s/\(\[mysqld\]\)/\1\nskip-name-resolve/g" /etc/mysql/mariadb.conf.d/50-server.cnf && \ 
+    rm -rf /var/lib/mysql/* && \
+    mkdir -p /var/lib/mysql /var/run/mysqld /var/log/mysql && \
+    chown -R mysql:mysql /var/lib/mysql /var/run/mysqld /var/log/mysql && \
+    chmod +x /entrypoint.sh
 
 EXPOSE 3306/tcp
 
-ENTRYPOINT ["/startup/run.sh"]
+VOLUME ["/var/lib/mysql"]
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/usr/bin/mysqld_safe"]
