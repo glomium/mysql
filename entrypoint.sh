@@ -29,12 +29,10 @@ else
     fi
 
     # run sql in tempfile
-
-   /usr/bin/envsubst < entrypoint.sql | /usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --datadir='/var/lib/mysql'
-
+   /usr/bin/envsubst < entrypoint.sql | /usr/sbin/mysqld --user=mysql --bootstrap --verbose=0 --datadir='/var/lib/mysql'
     if [ -f "/run/secrets/mysql_init.sql" ]; then
         echo "[i] load data from mysql_init.sql"
-        /usr/bin/mysqld --user=mysql --bootstrap --verbose=0 --datadir='/var/lib/mysql' < /run/secrets/mysql_entrypoint.sql
+        /usr/sbin/mysqld --user=mysql --bootstrap --verbose=0 --datadir='/var/lib/mysql' < /run/secrets/mysql_init.sql
     fi
 fi
 
