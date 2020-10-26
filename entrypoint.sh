@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-if [ -d /var/lib/mysql/mysql ]; then
+if [ -d $DBDATA/mysql ]; then
     echo '[i] MySQL directory already present, skipping creation'
 
 else
@@ -13,7 +13,7 @@ else
         exit 1
     fi
 
-    chown -R mysql:mysql /var/lib/mysql
+    chown -R mysql:mysql $DBDATA
 
     # init database
     echo '[i] Initializing database'
@@ -48,4 +48,5 @@ else
 fi
 
 echo '[i] start running mysqld'
-exec /usr/bin/mysqld_safe --user=mysql --console --datadir='/var/lib/mysql' --skip-syslog --log-error=/dev/stderr
+# --skip-log-error redirects error logs to stderr
+exec /usr/bin/mysqld_safe --user=mysql --console --datadir='/var/lib/mysql' --skip-syslog --skip-log-error
