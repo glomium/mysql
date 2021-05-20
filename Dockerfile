@@ -1,5 +1,6 @@
-ARG UBUNTU=rolling
-FROM ubuntu:$UBUNTU
+# vim:set ft=dockerfile:
+ARG BASEIMAGE=ubuntu:rolling
+FROM $BASEIMAGE
 MAINTAINER Sebastian Braun <sebastian.braun@fh-aachen.de>
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y -q \
