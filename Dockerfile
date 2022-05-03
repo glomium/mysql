@@ -1,6 +1,6 @@
 # vim:set ft=dockerfile:
-ARG UBUNTU=rolling
-FROM ubuntu:$UBUNTU
+ARG BASEIMAGE=ubuntu:rolling
+FROM $BASEIMAGE
 MAINTAINER Sebastian Braun <sebastian.braun@fh-aachen.de>
 
 ENV DEBIAN_FRONTEND noninteractive
