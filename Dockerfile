@@ -9,6 +9,7 @@ ENV LANG en_US.UTF-8
 RUN apt-get update && apt-get install --no-install-recommends -y -q \
     ca-certificates \
     gettext-base \
+ && apt-get install -y -q \
     mariadb-server \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
