@@ -6,7 +6,9 @@ MAINTAINER Sebastian Braun <sebastian.braun@fh-aachen.de>
 ENV DEBIAN_FRONTEND noninteractive
 ENV LANG en_US.UTF-8
 
-RUN apt-get update && apt-get install --no-install-recommends -y -q \
+RUN sed -i 's/archive.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list \
+ && sed -i 's/security.ubuntu.com/old-releases.ubuntu.com/' /etc/apt/sources.list \
+ && apt-get update && apt-get install --no-install-recommends -y -q \
     ca-certificates \
     gettext-base \
  && apt-get install -y -q \
